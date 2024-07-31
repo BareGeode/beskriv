@@ -31,8 +31,14 @@ public partial class MainWindow : Window
             FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]            
         });
 
-        var newPath = files[0].TryGetLocalPath();
-        if (newPath != null)
-            ImageDisplay.Source = new Bitmap(newPath);
+        if (files.Count != 1) return;
+
+        try
+        {
+            var newPath = files[0].TryGetLocalPath();
+            if (newPath != null)
+                ImageDisplay.Source = new Bitmap(newPath);
+        }
+        catch (ArgumentException) { }
     }
 }
