@@ -28,7 +28,7 @@ public partial class MainWindow : Window
         {
             Title = "Open Image File",
             AllowMultiple = false,
-            FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]            
+            FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]
         });
 
         if (files.Count != 1) return;
