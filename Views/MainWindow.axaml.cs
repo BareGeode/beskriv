@@ -27,7 +27,8 @@ public partial class MainWindow : Window
         var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
             Title = "Open Image File",
-            AllowMultiple = false
+            AllowMultiple = false,
+            FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]            
         });
 
         var newPath = files[0].TryGetLocalPath();
