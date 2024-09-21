@@ -21,17 +21,22 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
     <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Grid ColumnDefinitions="6*,*"
+          RowDefinitions="Auto, *">
         <Image x:Name="ImageDisplay"
                Stretch="Uniform"
                Source=""
-               Grid.Row="0" />
+               Grid.Column="0"
+               Grid.Row="0"
+               Grid.RowSpan="2" />
         <Button Content="Open image..."
-                Grid.Row="1"
-                Click="OpenImage" />
+                Click="OpenImage"
+                Grid.Column="1"
+                Grid.Row="0" />
+        <TextBox AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 Text="Test"
+                 Grid.Column="1"
+                 Grid.Row="1" />
     </Grid>
 </Window>
