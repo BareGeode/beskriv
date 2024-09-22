@@ -34,7 +34,7 @@
                 Grid.Row="0" />
         <TextBox AcceptsReturn="True"
                  TextWrapping="Wrap"
-                 Text="Test"
+                 Text="{Binding TextBoxText}"
                  Grid.Column="1"
                  Grid.Row="1" />
     </Grid>

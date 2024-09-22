@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using beskriv.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -12,6 +13,7 @@ namespace beskriv.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private Bitmap? _imageFile;
+    [ObservableProperty] private string _textBoxText = "";
 
     [RelayCommand]
     public async Task OpenImage()
@@ -33,8 +35,12 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             var newPath = files[0].TryGetLocalPath();
             
-            if (newPath != null)
+            if (newPath != null) {
+                ExifIO test = new ExifIO(newPath);
+
                 ImageFile = new Bitmap(newPath);
+                TextBoxText = test.readUserComment();
+            }
         }
         catch (ArgumentException) { }
     }
