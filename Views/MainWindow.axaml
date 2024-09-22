@@ -3,18 +3,44 @@
         xmlns:vm="using:beskriv.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+        d:DesignWidth="1280"
+        d:DesignHeight="720"
         x:Class="beskriv.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="beskriv">
-
+        Title="beskriv"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="400"
+        MinHeight="300"
+        Width="1280"
+        Height="720">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
+    <Grid ColumnDefinitions="6*,*,*"
+          RowDefinitions="Auto, *">
+        <Image x:Name="ImageDisplay"
+               Stretch="Uniform"
+               Source="{Binding ImageFile}"
+               Grid.Column="0"
+               Grid.Row="0"
+               Grid.RowSpan="2" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="0">
+            <Button Content="Open image..."
+                    Command="{Binding OpenImage}" />
+            <Button Content="Save description"
+                    Command="{Binding SaveImage}" />
+        </StackPanel>
+        <TextBox AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 Text="{Binding TextBoxText, Mode=TwoWay}"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="2"
+                 Grid.Row="1" />
+    </Grid>
 </Window>
