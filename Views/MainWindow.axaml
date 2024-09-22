@@ -25,12 +25,12 @@
           RowDefinitions="Auto, *">
         <Image x:Name="ImageDisplay"
                Stretch="Uniform"
-               Source=""
+               Source="{Binding ImageFile}"
                Grid.Column="0"
                Grid.Row="0"
                Grid.RowSpan="2" />
         <Button Content="Open image..."
-                Click="OpenImage"
+                Command="{Binding OpenImage}"
                 Grid.Column="1"
                 Grid.Row="0" />
         <TextBox AcceptsReturn="True"

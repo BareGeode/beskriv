@@ -1,8 +1,41 @@
-﻿namespace beskriv.ViewModels;
+﻿using System;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
-public class MainWindowViewModel : ViewModelBase
+namespace beskriv.ViewModels;
+
+public partial class MainWindowViewModel : ViewModelBase
 {
-#pragma warning disable CA1822 // Mark members as static
-    public string Greeting => "Welcome to Avalonia!";
-#pragma warning restore CA1822 // Mark members as static
+    [ObservableProperty] private Bitmap? _imageFile;
+
+    [RelayCommand]
+    public async Task OpenImage()
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.StorageProvider is not { } provider)
+            throw new NullReferenceException("Missing StorageProvider instance.");
+
+        var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
+        {
+            Title = "Open Image File",
+            AllowMultiple = false,
+            FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]
+        });
+
+        if (files.Count != 1) return;
+
+        try
+        {
+            var newPath = files[0].TryGetLocalPath();
+            
+            if (newPath != null)
+                ImageFile = new Bitmap(newPath);
+        }
+        catch (ArgumentException) { }
+    }
 }

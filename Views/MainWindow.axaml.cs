@@ -14,28 +14,4 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-
-    public async void OpenImage(object sender, RoutedEventArgs args)
-    {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
-            desktop.MainWindow?.StorageProvider is not { } provider)
-            throw new NullReferenceException("Missing StorageProvider instance.");
-
-        var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
-        {
-            Title = "Open Image File",
-            AllowMultiple = false,
-            FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]
-        });
-
-        if (files.Count != 1) return;
-
-        try
-        {
-            var newPath = files[0].TryGetLocalPath();
-            if (newPath != null)
-                ImageDisplay.Source = new Bitmap(newPath);
-        }
-        catch (ArgumentException) { }
-    }
 }
