@@ -24,7 +24,7 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             Title = "Open Image File",
             AllowMultiple = false,
-            FileTypeFilter = [FilePickerFileTypes.ImageAll, FilePickerFileTypes.All]
+            FileTypeFilter = [SupportedImages, FilePickerFileTypes.All]
         });
 
         if (files.Count != 1) return;
@@ -38,4 +38,11 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         catch (ArgumentException) { }
     }
+
+    public static FilePickerFileType SupportedImages { get; } = new("Supported image files")
+    {
+        Patterns = ["*.png", "*.jpg", "*.jpeg", "*.webp"],
+        AppleUniformTypeIdentifiers = ["public.png","public.jpeg","org.webmproject.webp"],
+        MimeTypes = ["image/png","image/jpeg","image/webp"]
+    };
 }
