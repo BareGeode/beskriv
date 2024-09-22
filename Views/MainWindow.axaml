@@ -8,7 +8,6 @@
         d:DesignHeight="720"
         x:Class="beskriv.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
         Title="beskriv"
         WindowStartupLocation="CenterScreen"
         MinWidth="400"
