@@ -20,7 +20,7 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
     <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
-    <Grid ColumnDefinitions="6*,*"
+    <Grid ColumnDefinitions="6*,*,*"
           RowDefinitions="Auto, *">
         <Image x:Name="ImageDisplay"
                Stretch="Uniform"
@@ -28,14 +28,19 @@
                Grid.Column="0"
                Grid.Row="0"
                Grid.RowSpan="2" />
-        <Button Content="Open image..."
-                Command="{Binding OpenImage}"
-                Grid.Column="1"
-                Grid.Row="0" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="0">
+            <Button Content="Open image..."
+                    Command="{Binding OpenImage}" />
+            <Button Content="Save description"
+                    Command="{Binding SaveImage}" />
+        </StackPanel>
         <TextBox AcceptsReturn="True"
                  TextWrapping="Wrap"
-                 Text="{Binding TextBoxText}"
+                 Text="{Binding TextBoxText, Mode=TwoWay}"
                  Grid.Column="1"
+                 Grid.ColumnSpan="2"
                  Grid.Row="1" />
     </Grid>
 </Window>

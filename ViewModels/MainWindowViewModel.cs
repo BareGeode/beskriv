@@ -13,7 +13,8 @@ namespace beskriv.ViewModels;
 public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private Bitmap? _imageFile;
-    [ObservableProperty] private string _textBoxText = "";
+    [ObservableProperty] string _textBoxText = "";
+    ExifIO? exifIO = null;
 
     [RelayCommand]
     public async Task OpenImage()
@@ -36,13 +37,20 @@ public partial class MainWindowViewModel : ViewModelBase
             var newPath = files[0].TryGetLocalPath();
             
             if (newPath != null) {
-                ExifIO test = new ExifIO(newPath);
+                exifIO = new ExifIO(newPath);
 
                 ImageFile = new Bitmap(newPath);
-                TextBoxText = test.readUserComment();
+                TextBoxText = exifIO.ReadUserComment();
             }
         }
         catch (ArgumentException) { }
+    }
+
+    [RelayCommand]
+    public Task SaveImage()
+    {
+        exifIO?.SaveExif(TextBoxText);
+        return Task.CompletedTask;
     }
 
     public static FilePickerFileType SupportedImages { get; } = new("Supported image files")

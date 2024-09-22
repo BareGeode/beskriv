@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using ImageMagick;
 
@@ -25,23 +24,26 @@ public class ExifIO
         }
 
         var temporaryProfile = image.GetExifProfile();
-        if(temporaryProfile is null)
+        if (temporaryProfile is null)
             profile = new ExifProfile();
         else
             profile = temporaryProfile;
     }
 
-    public string readUserComment()
+    public string ReadUserComment()
     {
-        var image = new MagickImage(filePath);
-        var profile = image.GetExifProfile();
-
-        if (profile is null) return "";
         if (profile.GetValue(ExifTag.UserComment) is null) return "";
 
         byte[] userCommentBytes = profile.GetValue(ExifTag.UserComment)!.Value[8..];
         string userCommentString = Encoding.UTF8.GetString(userCommentBytes);
 
         return userCommentString;
+    }
+
+    public void SaveExif(string description)
+    {
+        profile.SetValue(ExifTag.UserComment, [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, .. Encoding.UTF8.GetBytes(description)]);
+        image.SetProfile(profile);
+        image.Write(filePath);
     }
 }
